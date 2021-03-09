@@ -24,11 +24,87 @@ ComplexNumber ComplexNumber::operator+(const ComplexNumber &c){
 	return ComplexNumber(real+c.real,imag+c.imag);
 }
 
+ComplexNumber operator+(double s,const ComplexNumber &c){
+	return ComplexNumber(s+c.real,c.imag);
+}
+
 ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-//Write your code here
+ComplexNumber operator-(double s,const ComplexNumber &c){
+	return ComplexNumber(s-c.real,-c.imag);
+}
+
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+	double num1,num2,num3,num4;
+	num1 = real*c.real;
+	num2 = real*c.imag;
+	num3 = imag*c.real;
+	num4 = imag*c.imag;
+
+	return ComplexNumber(num1-num4,num2+num3);
+}
+
+ComplexNumber operator*(double s,const ComplexNumber &c){
+	double num1,num2;
+	num1 = s*c.real;
+	num2 = s*c.imag;
+	
+	return ComplexNumber(num1,num2);
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+	double num1,num2,num3,num4,num5;
+	num1 = real*c.real;
+	num2 = real*c.imag;
+	num3 = imag*c.real;
+	num4 = imag*c.imag;
+	num5 = (c.real*c.real) + (c.imag*c.imag);
+	return ComplexNumber((num1+num4)/num5,(num3-num2)/num5);
+}
+
+ComplexNumber operator/(double s,const ComplexNumber &c){
+	double num1,num2,num3;
+	num1 = s*c.real;
+	num2 = s*c.imag*(-1);
+	num3 = (c.real*c.real) + (c.imag*c.imag);
+	return ComplexNumber(num1/num3,num2/num3);
+}
+
+ostream & operator<<(ostream &os,const ComplexNumber &c){
+	if(c.imag == 0) return os << c.real;
+	else if(c.imag < 0){
+		if(c.real == 0) return os << c.imag << "i";
+		else return os << c.real << c.imag << "i";
+	}
+	else if(c.real == 0) return os << c.imag << "i";
+	else return os << c.real << "+" << c.imag << "i";
+}
+
+
+ComplexNumber operator==(double s,const ComplexNumber &c){
+	if(s == c.real and s == c.imag) return true;
+	else return false;
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+	if(real == c.real and imag == c.imag) return true;
+	else return false;
+}
+
+double ComplexNumber::abs(){
+	double num;
+	num = sqrt((real*real)+(imag*imag));
+	return num; 
+}
+
+double ComplexNumber::angle(){
+	double num;
+	num = atan2(imag,real) * 180 / M_PI;
+	return num; 
+}
+
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
